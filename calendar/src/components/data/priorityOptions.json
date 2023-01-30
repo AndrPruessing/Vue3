@@ -1,0 +1,5 @@
+[
+  { "value": "-1", "displayName": "Hoch" },
+  { "value": "0", "displayName": "Mittel" },
+  { "value": "1", "displayName": "Tief" }
+]
