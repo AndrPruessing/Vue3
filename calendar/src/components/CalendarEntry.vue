@@ -11,6 +11,7 @@
         class="form-control"
         placeholder="Neuer Eintrag"
         v-model="event.title"
+        ref="eventTitleInput"
         @keyup.enter.exact="submitEvent()"
         @keyup.ctrl.enter.exact="clearEventForm()"
       />
@@ -62,6 +63,9 @@ export default {
         priority: 0,
       },
     };
+  },
+  mounted() {
+    this.$refs.eventTitleInput.focus();
   },
   methods: {
     eventColorClasses(eventColor) {

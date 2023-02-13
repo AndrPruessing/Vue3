@@ -3,13 +3,18 @@ import { reactive, readonly } from "vue";
 
 const state = reactive({
   calendarWeekData,
+  activeView: "CalendarWeek",
 });
 
 const getters = {
   activeDay: () => state.calendarWeekData.find((day) => day.active),
+  activeView: () => state.activeView,
 };
 
 const mutations = {
+  setActiveView(view) {
+    state.activeView = view;
+  },
   deleteEvent(dayId, eventId) {
     const dayObj = state.calendarWeekData.find((day) => day.id === dayId);
     const eventIdx = dayObj.events.findIndex((event) => event.id === eventId);
@@ -30,7 +35,6 @@ const mutations = {
     });
   },
   updateEvent(dayId, eventId, newEvent) {
-    console.log({ newEvent });
     const dayObj = state.calendarWeekData.find((day) => day.id === dayId);
     const eventObj = dayObj.events.find((event) => event.id === eventId);
     eventObj.title = newEvent.title !== "" ? newEvent.title : eventObj.title;
@@ -39,8 +43,6 @@ const mutations = {
   },
   addEvent(newEvent) {
     const activeDay = getters.activeDay();
-    console.log({ activeDay });
-    console.log({ newEvent });
     activeDay.events.push({
       ...newEvent,
       edit: false,
