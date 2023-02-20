@@ -22,11 +22,19 @@
       <hr />
       <ul class="nav nav-pills nav-fill">
         <li class="nav-item" role="button">
-          <a class="nav-link"
+          <a
+            class="nav-link"
+            :class="isActiveOrdering('priority')"
+            @click="changeOrdering('priority')"
             ><i class="fas fa-sort-numeric-down-alt text-success"></i
           ></a>
         </li>
-        <li class="nav-item" role="button">
+        <li
+          class="nav-item"
+          role="button"
+          :class="isActiveOrdering('title')"
+          @click="changeOrdering('title')"
+        >
           <a class="nav-link"><i class="fas fa-sort-alpha-down text-success"></i></a>
         </li>
       </ul>
@@ -51,7 +59,15 @@ export default {
       store.mutations.setActiveView(componentName);
     },
     isActiveView(componentName) {
-      if (componentName === store.getters.activeView) {
+      if (componentName === store.getters.activeView()) {
+        return ["border border-success"];
+      }
+    },
+    changeOrdering(ordering) {
+      store.mutations.setActiveOrdering(ordering);
+    },
+    isActiveOrdering(ordering) {
+      if (ordering === store.getters.activeOrdering()) {
         return ["border border-success"];
       }
     },

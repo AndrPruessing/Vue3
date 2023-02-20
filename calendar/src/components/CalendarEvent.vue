@@ -1,36 +1,38 @@
 <template>
   <div class="alert text-center" :class="alertColor">
-    <template v-if="!event.edit">
-      <div>
-        <slot name="eventPriorität" :displayPriorityName="displayPriorityName">
-          <strong>{{ displayPriorityName }}</strong>
+    <transition name="fade" mode="out-in">
+      <div v-if="!event.edit">
+        <div>
+          <slot name="eventPriorität" :displayPriorityName="displayPriorityName">
+            <strong>{{ displayPriorityName }}</strong>
+          </slot>
+        </div>
+        <slot name="eventTitle">
+          <div>{{ event.title }}</div>
         </slot>
+        <slot></slot>
+        <div>
+          <i class="fas fa-edit me-2" role="button" @click="setEdit()"></i>
+          <i class="far fa-trash-alt" role="button" @click="deleteEvent()"></i>
+        </div>
       </div>
-      <slot name="eventTitle">
-        <div>{{ event.title }}</div>
-      </slot>
-      <slot></slot>
-      <div>
-        <i class="fas fa-edit me-2" role="button" @click="setEdit()"></i>
-        <i class="far fa-trash-alt" role="button" @click="deleteEvent()"></i>
+      <div v-else>
+        <input
+          type="text"
+          class="form-control"
+          ref="newEventTitleRef"
+          :placeholder="event.title"
+          v-model="newEventTitle"
+        />
+        <select class="form-select mt-2" v-model="newEventPriority">
+          <option v-for="option in priorityOptions" :value="option.value" :key="option">
+            {{ option.displayName }}
+          </option>
+        </select>
+        <hr />
+        <i class="fas fa-check" role="button" @click="updateEvent()"></i>
       </div>
-    </template>
-    <template v-else>
-      <input
-        type="text"
-        class="form-control"
-        ref="newEventTitleRef"
-        :placeholder="event.title"
-        v-model="newEventTitle"
-      />
-      <select class="form-select mt-2" v-model="newEventPriority">
-        <option v-for="option in priorityOptions" :value="option.value" :key="option">
-          {{ option.displayName }}
-        </option>
-      </select>
-      <hr />
-      <i class="fas fa-check" role="button" @click="updateEvent()"></i>
-    </template>
+    </transition>
   </div>
 </template>
 
