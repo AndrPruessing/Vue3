@@ -9,7 +9,7 @@
           <div class="card-body">
             <div
               class="alert alert-secondary"
-              v-for="task in newTasks"
+              v-for="task in newTasks()"
               :key="task.id"
             >
               {{ task.content }}
@@ -47,29 +47,22 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "KanbanBoard",
-  data() {
-    return {
-      tasks: [
-        {
-          id: 1,
-          content: "Dashboard überarbeiten.",
-          status: 0,
-        },
-        {
-          id: 2,
-          content: "Anwendung auf Vue.js umstellen.",
-          status: 0,
-        },
-      ],
-    };
+<script setup lang="ts">
+type taskType = { id: number; content: string; status: number };
+let tasks: Array<taskType> = [
+  {
+    id: 1,
+    content: "Dashboard überarbeiten.",
+    status: 0,
   },
-  computed: {
-    newTasks() {
-      return this.tasks.filter((task) => task.status === 0);
-    },
+  {
+    id: 2,
+    content: "Anwendung auf Vue.js umstellen.",
+    status: 0,
   },
-};
+];
+
+function newTasks(): taskType[] {
+  return tasks.filter((task) => task.status === 0);
+}
 </script>
