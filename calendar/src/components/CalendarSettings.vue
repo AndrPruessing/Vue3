@@ -15,13 +15,19 @@
             class="nav-link"
             @click="changeActiveView(componentName)"
             :class="isActiveView(componentName)"
-            ><i class="text-success" :class="icon"></i
+            ><i
+              class="text-success"
+              :class="icon"
+            ></i
           ></a>
         </li>
       </ul>
       <hr />
       <ul class="nav nav-pills nav-fill">
-        <li class="nav-item" role="button">
+        <li
+          class="nav-item"
+          role="button"
+        >
           <a
             class="nav-link"
             :class="isActiveOrdering('priority')"
@@ -35,7 +41,9 @@
           :class="isActiveOrdering('title')"
           @click="changeOrdering('title')"
         >
-          <a class="nav-link"><i class="fas fa-sort-alpha-down text-success"></i></a>
+          <a class="nav-link"
+            ><i class="fas fa-sort-alpha-down text-success"></i
+          ></a>
         </li>
       </ul>
     </div>

@@ -1,5 +1,8 @@
 <template>
-  <div class="card border-start" :class="cardClasses">
+  <div
+    class="card border-start"
+    :class="cardClasses"
+  >
     <div
       class="card-header text-center"
       :class="cardHeaderClasses"
@@ -9,10 +12,13 @@
       <strong>{{ day.fullName }}</strong>
     </div>
     <div class="card-body">
-      <!-- jedes element einer transition group braucht das :key binding -->
-      <!-- transition group: transition wird auch beim einfügen und entfernen von elementen ausgeführt -->
-      <!-- transition group: transition wird auch beim ändern reihenfolge -->
-      <transition name="fade" mode="out-in">
+      <!-- jedes element innerhalb einer transition-group braucht das :key binding -->
+      <!-- transition-group: transition wird auch beim einfügen und entfernen von elementen ausgeführt -->
+      <!-- transition-group: transition wird auch beim ändern reihenfolge ausgeführt-->
+      <transition
+        name="fade"
+        mode="out-in"
+      >
         <div v-if="day.events.length">
           <transition-group name="list">
             <CalendarEvent
@@ -61,7 +67,9 @@ export default {
   },
   computed: {
     cardClasses() {
-      return this.day.id === store.getters.activeDay().id ? ["border-primary"] : null;
+      return this.day.id === store.getters.activeDay().id
+        ? ["border-primary"]
+        : null;
     },
     cardHeaderClasses() {
       return this.day.id === store.getters.activeDay().id

@@ -15,8 +15,15 @@
         @keyup.enter.exact="submitEvent()"
         @keyup.ctrl.enter.exact="clearEventForm()"
       />
-      <select class="form-select mt-2" v-model="event.priority">
-        <option v-for="option in priorityOptions" :value="option.value" :key="option">
+      <select
+        class="form-select mt-2"
+        v-model="event.priority"
+      >
+        <option
+          v-for="(option, idx) in priorityOptions"
+          :value="option.value"
+          :key="idx"
+        >
           {{ option.displayName }}
         </option>
       </select>
@@ -33,10 +40,19 @@
       </div>
       <hr />
       <div class="d-grid gap-2">
-        <button class="btn btn-primary" @click="submitEvent()" :disabled="!event.title">
+        <button
+          class="btn btn-primary"
+          @click="submitEvent()"
+          :disabled="!event.title"
+        >
           Eintragen
         </button>
-        <button class="btn btn-danger" @click="clearEventForm()">Inhalt löschen</button>
+        <button
+          class="btn btn-danger"
+          @click="clearEventForm()"
+        >
+          Inhalt löschen
+        </button>
       </div>
     </div>
   </div>

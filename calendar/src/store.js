@@ -65,7 +65,6 @@ const mutations = {
       id: `${activeDay.id} - ${activeDay.events.length + 1}`,
       priority: Number(newEvent.priority),
     });
-    console.log(activeDay);
   },
 };
 
