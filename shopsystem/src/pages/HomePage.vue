@@ -16,7 +16,7 @@
         </div>
       </template>
       <template #rightCol>
-        <Register/>
+      <component :is="componentName" @change-component="changeComponent"></component>
       </template>
     </TheTwoColumnsLayout>
   </div>
@@ -25,13 +25,25 @@
 <script>
   import TheTwoColumnsLayout from '@/layouts/TheTwoColumnsLayout';
   import Register from"@/components/auth/Register"
+  import Login from"@/components/auth/Login"
 
   export default {
     name:"HomePage",
     components:{
       TheTwoColumnsLayout,
       Register,
-    }
+      Login,
+    },
+    data(){
+      return {
+        componentName: "register",
+      }
+    },
+    methods: {
+      changeComponent(payload){
+        this.componentName = payload.componentName;
+      }
+    },
   }
 </script>
 
