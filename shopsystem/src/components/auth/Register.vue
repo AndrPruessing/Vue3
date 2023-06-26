@@ -43,6 +43,7 @@
 <script lang="ts">
   import {Form, Field} from "vee-validate";
   import {registerValidationSchema} from "./RegisterValidationSchema";
+  import { defineComponent } from "vue";
 
   type FormValues = {
     email: string,
@@ -50,7 +51,7 @@
     confirmPassword: string,
   }
 
-  export default {
+  export default defineComponent({
     name:"AuthRegister",
     components:{
       Form,
@@ -74,7 +75,7 @@
         this.$emit("change-component", {componentName});
       },
     },
-  }
+  })
 </script>
 
 <style lang="scss" scoped>

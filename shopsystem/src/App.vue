@@ -22,7 +22,6 @@ export default {
 <style>
 @import "~bootstrap/dist/css/bootstrap.min.css";
 @import "~@fortawesome/fontawesome-free/css/all.min.css";
-@import "~animate.css/animate.min.css";
 
 .bg-vue {
   background-color: rgb(52,73,94);

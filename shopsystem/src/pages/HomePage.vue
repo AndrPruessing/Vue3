@@ -16,8 +16,13 @@
         </div>
       </template>
       <template #rightCol>
-      <component :is="componentName" @change-component="changeComponent"></component>
-      </template>
+      <transition
+      name="fade" mode="out-in" appear
+        ><component
+          :is="componentName"
+          @change-component="changeComponent"
+        ></component></transition
+    ></template>
     </TheTwoColumnsLayout>
   </div>
 </template>
@@ -47,6 +52,17 @@
   }
 </script>
 
-<style lang="scss" scoped>
-
+<style scoped>
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+.fade-enter-to,
+.fade-leave-from {
+  opacity: 1;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.25s ease-out;
+}
 </style>
