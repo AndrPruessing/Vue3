@@ -17,7 +17,7 @@
       </template>
       <template #rightCol>
       <transition
-      name="fade" mode="out-in" appear
+      name="slide-fade" mode="out-in" appear
         ><component
           :is="componentName"
           @change-component="changeComponent"
@@ -63,6 +63,19 @@
 }
 .fade-enter-active,
 .fade-leave-active {
-  transition: all 0.25s ease-out;
+  transition: all 0.5s ease-out;
+}
+.slide-fade-enter-active {
+  transition: all 0.5s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.5s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateX(20px);
+  opacity: 0;
 }
 </style>
