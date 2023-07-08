@@ -7,6 +7,10 @@
       <h2>Jetzt Registrieren</h2>
       oder <a class="text-vue2" role="button" @click="changeComponent('login')">melden Sie sich mit Ihrem Konto an</a>
     </div>
+<!-- TODO: AlertBoxVomponent -->
+    <div class="alert alert-danger col-md-8 offset-2" v-if="error">{{ errorDisplayText }}</div>
+    <div class="alert alert-success col-md-8 offset-2" v-if="success">{{ successDisplayText }}</div>
+
     <Form @submit="submitData" :validation-schema="registerValidationSchema" v-slot="{errors}">
       <div class="form-row">
         <div class="form-group col-md-8 offset-2">
@@ -32,7 +36,9 @@
       <div class="form-row">
         <div class="form-group col-md-8 offset-2 mt-3">
           <div class="d-grid">
-          <button class="btn bg-vue">Registrieren</button>
+          <button class="btn bg-vue">
+          <span v-if="!isLoading">Registrieren</span>
+          <span v-else class="spinner-border spinner-border-sm"></span></button>
           </div>
         </div>
       </div>
@@ -44,6 +50,8 @@
   import {Form, Field} from "vee-validate";
   import {registerValidationSchema} from "./RegisterValidationSchema";
   import { defineComponent } from "vue";
+  import axios from "axios";
+  import {FIREBASE_API_KEY} from "../../config/firebase";
 
   type FormValues = {
     email: string,
@@ -64,12 +72,46 @@
     },
     data(){
       return {
+        error: '',
+        success:false,
+        successDisplayText: 'erfolgreich Registriert',
         registerValidationSchema,
+        isLoading:false,
       };
     },
+    computed:{
+      errorDisplayText() {
+        if(this.error) {
+          if(this.error.includes("EMAIL_EXISTS")){
+            return "Die Email existiert bereits";
+          }
+          return " Es ist ein Unbekannter Fehler aufgetreten";
+        } return "";
+      }
+    },
     methods: {
+      // validation via schema, so values should be valid here
       submitData(values:FormValues){
-        console.log({values});
+        this.isLoading=true;
+        this.success = false;
+        this.error = '';
+
+        const signupDataObject = {
+          email: values.email,
+          password: values.password,
+          returnSecureToken: true,
+        }
+        axios.post(
+          "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key="+FIREBASE_API_KEY,
+          signupDataObject
+          ).then((response) =>{
+            console.log({response})
+            this.success=true;
+            this.isLoading=false;
+          }).catch((error=>{
+            this.error = error.response.data.error.message;
+            this.isLoading=false;
+          }));
       },
       changeComponent(componentName:string){
         this.$emit("change-component", {componentName});
