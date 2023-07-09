@@ -82,6 +82,7 @@
     computed:{
       errorDisplayText() {
         if(this.error) {
+          console.log(this.error)
           if(this.error.includes("EMAIL_EXISTS")){
             return "Die Email existiert bereits";
           }
@@ -96,22 +97,18 @@
         this.success = false;
         this.error = '';
 
-        const signupDataObject = {
-          email: values.email,
+        this.$store.dispatch("signup", {
+          email:values.email,
           password: values.password,
-          returnSecureToken: true,
-        }
-        axios.post(
-          "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key="+FIREBASE_API_KEY,
-          signupDataObject
-          ).then((response) =>{
-            console.log({response})
-            this.success=true;
+        }).then(()=> {
+              this.success=true;
             this.isLoading=false;
-          }).catch((error=>{
-            this.error = error.response.data.error.message;
-            this.isLoading=false;
-          }));
+            this.changeComponent("login");
+        }).catch((error)=> {
+          this.error = error.message;
+          this.isLoading = false;
+        })
+
       },
       changeComponent(componentName:string){
         this.$emit("change-component", {componentName});
