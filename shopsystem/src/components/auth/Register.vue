@@ -7,7 +7,7 @@
       <h2>Jetzt Registrieren</h2>
       oder <a class="text-vue2" role="button" @click="changeComponent('login')">melden Sie sich mit Ihrem Konto an</a>
     </div>
-<!-- TODO: AlertBoxVomponent -->
+
     <div class="alert alert-danger col-md-8 offset-2" v-if="error">{{ errorDisplayText }}</div>
     <div class="alert alert-success col-md-8 offset-2" v-if="success">{{ successDisplayText }}</div>
 
@@ -36,7 +36,7 @@
       <div class="form-row">
         <div class="form-group col-md-8 offset-2 mt-3">
           <div class="d-grid">
-          <button class="btn bg-vue">
+          <button class="btn bg-vue" type="submit">
           <span v-if="!isLoading">Registrieren</span>
           <span v-else class="spinner-border spinner-border-sm"></span></button>
           </div>
@@ -74,9 +74,9 @@
       return {
         error: '',
         success:false,
+        isLoading:false,
         successDisplayText: 'erfolgreich Registriert',
         registerValidationSchema,
-        isLoading:false,
       };
     },
     computed:{
