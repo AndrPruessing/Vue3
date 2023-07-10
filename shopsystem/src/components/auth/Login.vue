@@ -7,7 +7,7 @@
       <h2>Jetzt Anmelden</h2>
       oder <a class="text-vue2" role="button" @click="changeComponent('register')">erstellen Sie jetz ein Konto</a>
     </div>
-    
+
     <div class="alert alert-danger col-md-8 offset-2" v-if="error">{{ errorDisplayText }}</div>
     <div class="alert alert-success col-md-8 offset-2" v-if="success">{{ successDisplayText }}</div>
 
@@ -43,13 +43,11 @@
   import {Form, Field} from "vee-validate";
   import {loginValidationSchema} from "./RegisterValidationSchema";
   import { defineComponent } from "vue";
-  import axios from "axios";
-  import {FIREBASE_API_KEY} from "../../config/firebase";
 
   type FormValues = {
-    email: string,
-    password: string,
-  }
+          email: string,
+          password: string,
+        }
 
   export default defineComponent({
     name:"AuthLogin",
@@ -85,26 +83,20 @@
     },
     methods: {
       submitData(values:FormValues){
-         this.isLoading=true;
+        this.isLoading=true;
         this.success = false;
         this.error = '';
 
-        const signupDataObject = {
-          email: values.email,
+        this.$store.dispatch("signin", {
+          email:values.email,
           password: values.password,
-          returnSecureToken: true,
-        }
-        axios.post(
-          "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key="+FIREBASE_API_KEY,
-          signupDataObject
-          ).then((response) =>{
-            console.log({response})
-            this.success=true;
-            this.isLoading=false;
-          }).catch((error=>{
-            this.error = error.response.data.error.message;
-            this.isLoading=false;
-          }));
+        }).then(()=> {
+          this.success=true;
+          this.isLoading=false;
+        }).catch((error)=> {
+          this.error = error.message;
+          this.isLoading = false;
+        })
       },
       changeComponent(componentName:string){
         this.$emit("change-component", {componentName});

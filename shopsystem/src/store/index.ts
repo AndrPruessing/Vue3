@@ -17,14 +17,20 @@ import { FIREBASE_API_KEY } from '../config/firebase';
     }
   },
   actions: {
-    signup(context, payload){
+    auth(context, payload){
       const signupDataObject = {
         email: payload.email,
         password: payload.password,
         returnSecureToken: true,
       }
-      const promis = axios.post(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key="+FIREBASE_API_KEY,
+      let url = "";
+      if(payload.mode === "signin"){
+        url = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key="+FIREBASE_API_KEY;
+      } else if(payload.mode === "signup"){
+        url = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key="+FIREBASE_API_KEY;
+      }
+      const promise = axios.post(
+        url,
         signupDataObject
         ).then((response) =>{
           context.commit("setUSer", {
@@ -35,7 +41,21 @@ import { FIREBASE_API_KEY } from '../config/firebase';
           const errorMessage =new Error(error.response.data.error.message || "UNKNOWN_ERROR");
           throw errorMessage;
         }));
-        return promis;
+        return promise;
+    },
+    signin(context, payload){
+      const signupDataObject = {
+        ...payload,
+        mode: "signin",
+       }
+       return context.dispatch("auth", signupDataObject);
+    },
+    signup(context, payload){
+      const signupDataObject = {
+       ...payload,
+       mode: "signup",
+      }
+      return context.dispatch("auth", signupDataObject);
     },
   },
   modules: {

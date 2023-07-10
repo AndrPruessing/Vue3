@@ -50,8 +50,6 @@
   import {Form, Field} from "vee-validate";
   import {registerValidationSchema} from "./RegisterValidationSchema";
   import { defineComponent } from "vue";
-  import axios from "axios";
-  import {FIREBASE_API_KEY} from "../../config/firebase";
 
   type FormValues = {
     email: string,
@@ -101,7 +99,7 @@
           email:values.email,
           password: values.password,
         }).then(()=> {
-              this.success=true;
+            this.success=true;
             this.isLoading=false;
             this.changeComponent("login");
         }).catch((error)=> {
