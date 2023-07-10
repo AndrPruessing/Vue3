@@ -1,22 +1,13 @@
 <template>
   <!-- <nav>
     <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/> -->
-  <HomePage/>
-
+  </nav> -->
+  <router-view/>
 </template>
 
 <script>
-/* Component */
-import HomePage from "@/pages/HomePage.vue";
-
 export default {
   name:"App",
-  components:{
-    HomePage,
-  }
 }
 </script>
 
