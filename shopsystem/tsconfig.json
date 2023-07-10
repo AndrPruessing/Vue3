@@ -29,7 +29,7 @@
   },
   "include": [
     "src/**/*.ts", "src/**/*.vue", "tests/e2e/.fixtures/**/*.ts"
-  ],
+, "src/store/modules/auth/index.ts", "src/main.ts", "src/store/index.ts"  ],
   "exclude": [
     "node_modules"
   ]
